@@ -31,3 +31,32 @@ This project encompasses several key components:
 - FastAPI will be available at: `http://localhost:8002/docs`
 - Prometheus can be accessed at: `http://localhost:9090`
 - Grafana is accessible via: `http://localhost:3000`
+
+## Folder structure
+root  
+├── data_processing  
+│   ├── evaluate.py   
+│   ├── preprocess.py   
+│   ├── unzip.py  
+│   └── utils.py  
+├── docker-compose.yml  
+├── dvc.lock  
+├── dvc.yaml  
+├── eval_results  
+│   └── live  
+│       └── metrics.json  
+├── grafana_data  
+├── model_tuning.ipynb   
+├── params.yaml  
+├── prometheus_data    
+│   └── prometheus.yml  
+├── README.md  
+└── src  
+    ├── app  
+    │   ├── app.py  
+    │   ├── best_model.pth   
+    │   ├── __pycache__  
+    │   │   └── util.cpython-39.pyc   
+    │   └── util.py  
+    ├── Dockerfile  
+    └── requirements.txt  
