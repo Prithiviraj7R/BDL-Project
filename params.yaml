@@ -1,0 +1,24 @@
+base:
+  zip_file_path: "datasets.zip"
+
+unzip:
+  input_path: "datasets.zip"
+  output_path: "datasets"
+
+preprocess:
+  train_folder: "dataset/train"
+  test_folder: "dataset/test"
+  validation_folder: "dataset/valid"
+
+  output_folder: "processed_data"
+
+  mean: [0.485, 0.456, 0.406]
+  std: [0.229, 0.224, 0.225]
+
+evaluate:
+  ORIGINAL_DATASET_PATH: "dataset"
+  PROCESSED_DATASET_PATH: "processed_data"
+
+  OUTPUT_PATH: "eval_results"
+  
+  
