@@ -1,3 +1,5 @@
 project-venv/
 /datasets
 /processed_data
+artifacts/
+mlruns/
