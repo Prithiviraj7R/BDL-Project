@@ -1,4 +1,4 @@
-## Image Classification Project
+## End to End Image Classification Project
 The goal of this project is to build a deep learning model tailored specifically for image classification task. Our approach includes the integration of cutting-edge MLOps tools such as DVC, Git, MLflow, Docker, FastAPI, Prometheus, and Grafana.
 
 This project encompasses several key components:
