@@ -14,3 +14,20 @@ This project encompasses several key components:
    - **Prometheus and Grafana:** These monitoring tools will provide valuable insights into the performance and health of our deployed model, allowing for proactive optimization and troubleshooting.
 
 3. **Deployment and Monitoring:** Once the model is trained and validated, we will deploy it using Docker containers and FastAPI endpoints for real-time inference. Prometheus and Grafana will then monitor the model's performance metrics, ensuring reliability and performance optimization over time.
+
+## Deployment
+
+### Cloning the Repository
+1. Clone this repository to your local machine: `git clone https://github.com/Prithiviraj7R/BDL-Project.git`
+2. Navigate to the project directory: `cd BDL_Project`
+3. For Model selection using MLflow, run model_tuning.ipynb and `mlflow server --host 127.0.0.1 --port 8080`
+   
+### Building and Running the Docker Image
+1. Build the Docker image using Docker Compose: `docker compose build`
+2. Run and host the built image using Docker Compose: `docker compose up`
+
+
+### Accessing Services
+- FastAPI will be available at: `http://localhost:8002/docs`
+- Prometheus can be accessed at: `http://localhost:9090`
+- Grafana is accessible via: `http://localhost:3000`
