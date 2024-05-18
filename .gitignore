@@ -3,3 +3,4 @@ project-venv/
 /processed_data
 artifacts/
 mlruns/
+grafana_data/
