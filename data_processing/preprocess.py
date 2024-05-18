@@ -23,7 +23,7 @@ def preprocess(params_yaml_path):
         params = yaml.load(file, Loader=yaml.FullLoader)
     
     train_folder = params['preprocess']['train_folder']
-    validation_folder = params['preprocess']['validation_folder']
+    validation_folder = params['preprocess']['valid_folder']
     test_folder = params['preprocess']['test_folder']
 
     output_folder = params['preprocess']['output_folder']

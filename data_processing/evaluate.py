@@ -1,9 +1,11 @@
 import os
-from dvc.repo.live import Live
+from dvclive import Live
+import yaml
+import json
 
 def compare_datasets(params_yaml_path, live):
 
-    with open('params.yaml', 'r') as file:
+    with open(params_yaml_path, 'r') as file:
         params = yaml.load(file, Loader=yaml.FullLoader)
     
     original_dataset_path = params['evaluate']['ORIGINAL_DATASET_PATH']
@@ -37,9 +39,6 @@ def compare_datasets(params_yaml_path, live):
         live.summary = {}
     
     live.summary["Matching"] = True
-    matching = {"dir": True, "num_images": True}
-    json.dump(matching, open(os.path.join(output_path,'matching.json'), 'w'))
-
     return True
 
 if __name__ == '__main__':
@@ -49,6 +48,6 @@ if __name__ == '__main__':
     output_path = params['evaluate']['OUTPUT_PATH']
     live = Live(os.path.join(output_path,'live'),dvcyaml = False)
 
-    compare_datasets("Dataset", "Dataset_processed", live)
+    compare_datasets("params.yaml", live)
     live.make_summary()
 

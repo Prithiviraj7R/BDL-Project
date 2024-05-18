@@ -6,9 +6,9 @@ unzip:
   output_path: "datasets"
 
 preprocess:
-  train_folder: "dataset/train"
-  test_folder: "dataset/test"
-  validation_folder: "dataset/valid"
+  train_folder: "datasets/train"
+  test_folder: "datasets/test"
+  valid_folder: "datasets/valid"
 
   output_folder: "processed_data"
 
@@ -16,7 +16,7 @@ preprocess:
   std: [0.229, 0.224, 0.225]
 
 evaluate:
-  ORIGINAL_DATASET_PATH: "dataset"
+  ORIGINAL_DATASET_PATH: "datasets"
   PROCESSED_DATASET_PATH: "processed_data"
 
   OUTPUT_PATH: "eval_results"

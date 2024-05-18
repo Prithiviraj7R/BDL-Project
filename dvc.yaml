@@ -1,16 +1,16 @@
 stages:
   unzip:
-    cmd: python3 src/unzip.py
+    cmd: python3 data_processing/unzip.py
     params:
     - base.zip_file_path
     - unzip.output_path
     outs:
-    - dataset
+    - datasets
   preprocess:
-    cmd: python3 src/preprocess.py
+    cmd: python3 data_processing/preprocess.py
     deps:
-    - dataset
-    - src/preprocess.py
+    - datasets
+    - data_processing/preprocess.py
     params:
     - preprocess.mean
     - preprocess.output_folder
@@ -21,15 +21,15 @@ stages:
     outs:
     - processed_data
   evaluate:
-    cmd: python3 src/evaluate.py
+    cmd: python3 data_processing/evaluate.py
     deps:
-    - dataset
+    - datasets
     - processed_data
-    - src/evaluate.py
+    - data_processing/evaluate.py
     params:
     - evaluate.ORIGINAL_DATASET_PATH
     - evaluate.OUTPUT_PATH
     - evaluate.PROCESSED_DATASET_PATH
     metrics:
-    - eval_results/live/matching.json:
+    - eval_results/live/metrics.json:
         cache: false

@@ -1,0 +1,74 @@
+schema: '2.0'
+stages:
+  unzip:
+    cmd: python3 data_processing/unzip.py
+    params:
+      params.yaml:
+        base.zip_file_path: datasets.zip
+        unzip.output_path: datasets
+    outs:
+    - path: datasets
+      hash: md5
+      md5: 904c04b3145474ce0cf96e2c06a80f2f.dir
+      size: 30605138
+      nfiles: 3000
+  preprocess:
+    cmd: python3 data_processing/preprocess.py
+    deps:
+    - path: data_processing/preprocess.py
+      hash: md5
+      md5: 0c614953a7ebdee767de1c08fbb05c73
+      size: 2263
+    - path: datasets
+      hash: md5
+      md5: 904c04b3145474ce0cf96e2c06a80f2f.dir
+      size: 30605138
+      nfiles: 3000
+    params:
+      params.yaml:
+        preprocess.mean:
+        - 0.485
+        - 0.456
+        - 0.406
+        preprocess.output_folder: processed_data
+        preprocess.std:
+        - 0.229
+        - 0.224
+        - 0.225
+        preprocess.test_folder: datasets/test
+        preprocess.train_folder: datasets/train
+        preprocess.valid_folder: datasets/valid
+    outs:
+    - path: processed_data
+      hash: md5
+      md5: 904c04b3145474ce0cf96e2c06a80f2f.dir
+      size: 30605138
+      nfiles: 3000
+  evaluate:
+    cmd: python3 data_processing/evaluate.py
+    deps:
+    - path: data_processing/evaluate.py
+      hash: md5
+      md5: ff4f349011a76fe688ad587bda208b52
+      size: 1955
+    - path: datasets
+      hash: md5
+      md5: 904c04b3145474ce0cf96e2c06a80f2f.dir
+      size: 30605138
+      nfiles: 3000
+    - path: processed_data
+      hash: md5
+      md5: 904c04b3145474ce0cf96e2c06a80f2f.dir
+      size: 30605138
+      nfiles: 3000
+    params:
+      params.yaml:
+        evaluate.ORIGINAL_DATASET_PATH: datasets
+        evaluate.OUTPUT_PATH: eval_results
+        evaluate.PROCESSED_DATASET_PATH: processed_data
+    outs:
+    - path: eval_results/live/metrics.json
+      hash: md5
+      md5: 4b48b4d584d537a9506ea82975e537b9
+      size: 25
+      isexec: true
