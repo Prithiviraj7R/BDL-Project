@@ -7,9 +7,14 @@ services:
     volumes:
       - ./src/:/app/src
     ports:
-      - "8002:8000" 
+      - "8002-8004:8000" 
     environment:
       - DATABASE_URL=postgresql://hello_fastapi:hello_f
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+    scale: 3   # for hosting on 3 ports
     depends_on:
       - db
 
