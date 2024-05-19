@@ -1,8 +1,25 @@
 from utils import *
 
-def process_image_folder(folder_path):
-    data = datasets.ImageFolder(root=folder_path, transform=preprocess)
-    return data
+# def process_image_folder(folder_path):
+#     data = datasets.ImageFolder(root=folder_path, transform=preprocess)
+#     return data
+
+def process_image_folder(folder_path, return_dict, idx):
+
+    with open('params.yaml', 'r') as file:
+        params = yaml.load(file, Loader=yaml.FullLoader)
+
+    mean = params['preprocess']['mean']
+    std = params['preprocess']['std']
+
+    preprocess_ = transforms.Compose([
+        transforms.Resize((224, 224)),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=mean, std=std),
+    ])
+
+    data = datasets.ImageFolder(root=folder_path, transform=preprocess_)
+    return_dict[idx] = data
 
 def save_transformed_images(dataset, output_folder):
     for path, _ in dataset.samples:
@@ -33,23 +50,30 @@ def preprocess(params_yaml_path):
     # Recreate the output folder
     os.makedirs(output_folder)
 
-    mean = params['preprocess']['mean']
-    std = params['preprocess']['std']
-
-    preprocess = transforms.Compose([
-        transforms.Resize((224, 224)),
-        transforms.ToTensor(),
-        transforms.Normalize(mean=mean, std=std),
-    ])
-
     folders = [train_folder, validation_folder, test_folder]
 
     # Load datasets
     try:
-        with Pool() as pool:
-            data_sets = pool.map(process_image_folder, folders)
+        # with Pool() as pool:
+        #     data_sets = pool.map(process_image_folder, folders)
 
-        train_data, valid_data, test_data = data_sets
+        # train_data, valid_data, test_data = data_sets
+
+        manager = Manager()
+        return_dict = manager.dict()
+
+        processes = []
+        for i, folder in enumerate(folders):
+            p = Process(target=process_image_folder, args=(folder, return_dict, i))
+            processes.append(p)
+            p.start()
+
+        for p in processes:
+            p.join()
+
+        train_data = return_dict[0]
+        valid_data = return_dict[1]
+        test_data = return_dict[2]
 
     except Exception as e:
         print(f"Error loading datasets: {e}")
