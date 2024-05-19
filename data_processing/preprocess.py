@@ -5,10 +5,10 @@ from utils import *
 #     return data
 
 def process_image_folder(folder_path, return_dict, idx):
-
+    # Load params
     with open('params.yaml', 'r') as file:
         params = yaml.load(file, Loader=yaml.FullLoader)
-
+    # To preprocess the images, we need to resize them to 224x224 and normalize them
     mean = params['preprocess']['mean']
     std = params['preprocess']['std']
 
@@ -22,6 +22,8 @@ def process_image_folder(folder_path, return_dict, idx):
     return_dict[idx] = data
 
 def save_transformed_images(dataset, output_folder):
+    # Create output folder if it doesn't exist
+
     for path, _ in dataset.samples:
         # Construct source and destination paths
         source_path = path
@@ -58,7 +60,7 @@ def preprocess(params_yaml_path):
         #     data_sets = pool.map(process_image_folder, folders)
 
         # train_data, valid_data, test_data = data_sets
-
+        # Multiprocessing initiates the process_image_folder function in parallel
         manager = Manager()
         return_dict = manager.dict()
 
@@ -67,7 +69,7 @@ def preprocess(params_yaml_path):
             p = Process(target=process_image_folder, args=(folder, return_dict, i))
             processes.append(p)
             p.start()
-
+        # Wait for all processes to finish and join them
         for p in processes:
             p.join()
 
