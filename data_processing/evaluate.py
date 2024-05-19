@@ -4,6 +4,8 @@ import yaml
 import json
 
 def compare_datasets(params_yaml_path, live):
+    # Checks if the processed data and original data match
+    # The function compares the directory structure and the number of images in each directory
 
     with open(params_yaml_path, 'r') as file:
         params = yaml.load(file, Loader=yaml.FullLoader)
@@ -37,7 +39,7 @@ def compare_datasets(params_yaml_path, live):
 
     if not live.summary:
         live.summary = {}
-    
+    # Set Matching key as a metric to track in dvclive
     live.summary["Matching"] = True
     return True
 
